@@ -1,0 +1,31 @@
+CREATE DATABASE Biblioteca;
+GO
+
+USE Biblioteca;
+GO
+
+
+CREATE TABLE Libros (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Titulo NVARCHAR(150) NOT NULL,
+    Autor NVARCHAR(100),
+    Anio INT,
+    Disponible BIT DEFAULT 1 
+);
+
+
+CREATE TABLE Usuarios (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre NVARCHAR(100) NOT NULL,
+    Email NVARCHAR(100)
+);
+
+
+CREATE TABLE Prestamos (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    LibroId INT FOREIGN KEY REFERENCES Libros(Id),
+    UsuarioId INT FOREIGN KEY REFERENCES Usuarios(Id),
+    FechaPrestamo DATE NOT NULL DEFAULT GETDATE(),
+    FechaDevolucion DATE NULL,
+    Estado NVARCHAR(20) DEFAULT 'Prestado'
+);
